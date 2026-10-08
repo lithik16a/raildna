@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <title>Demo image: loose fastening</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6c7075"/><stop offset="1" stop-color="#3c4045"/></linearGradient>
+    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#939aa1"/><stop offset="1" stop-color="#60676e"/></linearGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="21"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.2 0"/></filter>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg)"/>
+  <rect x="60" y="110" width="480" height="190" rx="14" fill="url(#plate)" stroke="#33373b" stroke-width="4"/>
+  <g fill="#2c3034" stroke="#1d2023" stroke-width="2"><circle cx="150" cy="205" r="26"/><circle cx="450" cy="205" r="26"/></g>
+  <g fill="#767c83"><circle cx="150" cy="205" r="11"/><circle cx="450" cy="205" r="11"/></g>
+  <!-- displaced bolt, raised above the plate with a visible gap -->
+  <ellipse cx="300" cy="226" rx="46" ry="12" fill="#1d2023" opacity="0.55"/>
+  <polygon points="262,180 280,150 320,150 338,180 320,210 280,210" fill="#a9b0b7" stroke="#2b2e32" stroke-width="3" transform="rotate(-9 300 180)"/>
+  <circle cx="300" cy="180" r="13" fill="#6a7077" transform="rotate(-9 300 180)"/>
+  <rect x="286" y="212" width="28" height="20" fill="#7d848b" transform="rotate(-9 300 222)"/>
+  <ellipse cx="300" cy="226" rx="42" ry="9" fill="none" stroke="#111315" stroke-width="3" stroke-dasharray="6 5"/>
+  <rect width="600" height="400" filter="url(#grain)"/>
+</svg>

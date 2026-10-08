@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy-950: #061224;
+  --color-navy-900: #0b1f3a;
+  --color-navy-800: #12305a;
+  --color-navy-700: #1b447d;
+  --color-page: #f2f5f9;
+  --font-sans: ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+html,
+body {
+  background: var(--color-page);
+  color: #0f172a;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Subtle, purposeful motion only; respect user preference. */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.recharts-text {
+  font-size: 12px;
+}
