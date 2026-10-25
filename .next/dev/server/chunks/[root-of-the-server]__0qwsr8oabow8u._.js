@@ -1,0 +1,1688 @@
+module.exports = [
+(()=>{"use strict";return[
+"[project]/src/app/api/auth/login/route.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "POST",
+    ()=>POST
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/server.js [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z__$2e$object$3e$__ = __turbopack_context__.i("[project]/node_modules/zod/v4/classic/external.js [app-route] (ecmascript) <export * as z .object>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z__$2e$string$3e$__ = __turbopack_context__.i("[project]/node_modules/zod/v4/classic/external.js [app-route] (ecmascript) <export * as z .string>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$repositories$2f$users$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/database/repositories/users.ts [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$server$2f$api$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/server/api.ts [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$server$2f$auth$2f$password$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/server/auth/password.ts [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$server$2f$auth$2f$session$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/server/auth/session.ts [app-route] (ecmascript)");
+;
+;
+;
+;
+;
+;
+const schema = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z__$2e$object$3e$__["z"].object({
+    email: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z__$2e$string$3e$__["z"].string().trim().min(1, "Email is required").max(200),
+    password: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z__$2e$string$3e$__["z"].string().min(1, "Password is required").max(200)
+});
+const POST = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$server$2f$api$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["handler"])(async (req)=>{
+    const { email, password } = schema.parse(await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$server$2f$api$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["readJson"])(req));
+    const found = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$repositories$2f$users$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["findUserWithHash"])(email);
+    // Same error for unknown user / wrong password.
+    if (!found || !(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$server$2f$auth$2f$password$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["verifyPassword"])(password, found.passwordHash)) {
+        throw new __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$server$2f$api$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["HttpError"](401, "Invalid email or password.");
+    }
+    const res = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+        user: found.user
+    });
+    res.cookies.set(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$server$2f$auth$2f$session$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["SESSION_COOKIE"], (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$server$2f$auth$2f$session$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["createSessionToken"])(found.user.id), __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$server$2f$auth$2f$session$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["sessionCookieOptions"]);
+    return res;
+}, {
+    auth: false
+});
+}),
+"[project]/src/data/engineers.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+// Fictional demo engineer names (not real people).
+__turbopack_context__.s([
+    "ENGINEERS",
+    ()=>ENGINEERS
+]);
+const ENGINEERS = [
+    "Demo Engineer",
+    "A. Deshmukh",
+    "R. Iyer",
+    "S. Khan",
+    "P. Nair",
+    "M. Patil"
+];
+}),
+"[project]/src/database/client.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "dbPath",
+    ()=>dbPath,
+    "getDb",
+    ()=>getDb,
+    "resetDemoData",
+    ()=>resetDemoData
+]);
+var __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$fs__$5b$external$5d$__$28$node$3a$fs$2c$__cjs$29$__ = __turbopack_context__.i("[externals]/node:fs [external] (node:fs, cjs)");
+var __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$path__$5b$external$5d$__$28$node$3a$path$2c$__cjs$29$__ = __turbopack_context__.i("[externals]/node:path [external] (node:path, cjs)");
+var __TURBOPACK__imported__module__$5b$externals$5d2f$better$2d$sqlite3__$5b$external$5d$__$28$better$2d$sqlite3$2c$__cjs$2c$__$5b$project$5d2f$node_modules$2f$better$2d$sqlite3$29$__ = __turbopack_context__.i("[externals]/better-sqlite3 [external] (better-sqlite3, cjs, [project]/node_modules/better-sqlite3)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$schema$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/database/schema.ts [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$seed$2f$index$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/database/seed/index.ts [app-route] (ecmascript)");
+;
+;
+;
+;
+;
+;
+const globalForDb = globalThis;
+function dbPath() {
+    return __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$path__$5b$external$5d$__$28$node$3a$path$2c$__cjs$29$__["default"].resolve(/* turbopackIgnore: true */ process.cwd(), process.env.DATABASE_PATH ?? "data/raildna.db");
+}
+function open() {
+    const file = dbPath();
+    __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$fs__$5b$external$5d$__$28$node$3a$fs$2c$__cjs$29$__["default"].mkdirSync(__TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$path__$5b$external$5d$__$28$node$3a$path$2c$__cjs$29$__["default"].dirname(file), {
+        recursive: true
+    });
+    const db = new __TURBOPACK__imported__module__$5b$externals$5d2f$better$2d$sqlite3__$5b$external$5d$__$28$better$2d$sqlite3$2c$__cjs$2c$__$5b$project$5d2f$node_modules$2f$better$2d$sqlite3$29$__["default"](file);
+    db.pragma("journal_mode = WAL");
+    db.pragma("foreign_keys = ON");
+    db.exec(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$schema$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["SCHEMA_SQL"]);
+    const { n } = db.prepare("SELECT COUNT(*) AS n FROM users").get();
+    if (n === 0) (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$seed$2f$index$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["seedDatabase"])(db);
+    return db;
+}
+function getDb() {
+    if (!globalForDb.__raildnaDb) globalForDb.__raildnaDb = open();
+    return globalForDb.__raildnaDb;
+}
+function resetDemoData() {
+    const db = getDb();
+    db.exec("DELETE FROM inspection_findings; DELETE FROM inspections; DELETE FROM maintenance_records; DELETE FROM assets; DELETE FROM users;");
+    db.exec("DELETE FROM sqlite_sequence");
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$seed$2f$index$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["seedDatabase"])(db);
+}
+}),
+"[project]/src/database/repositories/users.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "findUserById",
+    ()=>findUserById,
+    "findUserWithHash",
+    ()=>findUserWithHash
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$client$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/database/client.ts [app-route] (ecmascript)");
+;
+;
+const toUser = (r)=>({
+        id: r.id,
+        email: r.email,
+        name: r.name,
+        role: r.role
+    });
+function findUserWithHash(email) {
+    const row = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$client$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["getDb"])().prepare("SELECT * FROM users WHERE email = ? COLLATE NOCASE").get(email);
+    return row ? {
+        user: toUser(row),
+        passwordHash: row.password_hash
+    } : null;
+}
+function findUserById(id) {
+    const row = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$client$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["getDb"])().prepare("SELECT * FROM users WHERE id = ?").get(id);
+    return row ? toUser(row) : null;
+}
+}),
+"[project]/src/database/schema.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+// SQLite schema. Column names and relationships mirror supabase/schema.sql (PostgreSQL) 1:1,
+// so moving to Supabase only requires re-implementing the repositories in ./repositories.
+__turbopack_context__.s([
+    "SCHEMA_SQL",
+    ()=>SCHEMA_SQL
+]);
+const SCHEMA_SQL = `
+CREATE TABLE IF NOT EXISTS users (
+  id            INTEGER PRIMARY KEY AUTOINCREMENT,
+  email         TEXT NOT NULL UNIQUE,
+  name          TEXT NOT NULL,
+  role          TEXT NOT NULL DEFAULT 'FIELD_ENGINEER',
+  password_hash TEXT NOT NULL,
+  created_at    TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS assets (
+  id                INTEGER PRIMARY KEY AUTOINCREMENT,
+  asset_id          TEXT NOT NULL UNIQUE,
+  asset_type        TEXT NOT NULL CHECK (asset_type IN ('Fishplate','Rail Clip','Base Plate','Sleeper','Fastener')),
+  location          TEXT NOT NULL,
+  latitude          REAL NOT NULL,
+  longitude         REAL NOT NULL,
+  installation_date TEXT NOT NULL,
+  condition         TEXT CHECK (condition IN ('Good','Moderate','High Risk')),
+  risk_score        INTEGER CHECK (risk_score BETWEEN 0 AND 100),
+  status            TEXT NOT NULL DEFAULT 'Active' CHECK (status IN ('Active','Under Maintenance')),
+  last_inspection   TEXT,
+  next_inspection   TEXT,
+  created_at        TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_assets_condition ON assets(condition);
+CREATE INDEX IF NOT EXISTS idx_assets_type ON assets(asset_type);
+
+CREATE TABLE IF NOT EXISTS inspections (
+  id              INTEGER PRIMARY KEY AUTOINCREMENT,
+  asset_id        TEXT NOT NULL REFERENCES assets(asset_id) ON DELETE CASCADE,
+  inspection_date TEXT NOT NULL,
+  inspection_type TEXT NOT NULL,
+  inspector       TEXT NOT NULL,
+  image_url       TEXT,
+  condition       TEXT NOT NULL CHECK (condition IN ('Good','Moderate','High Risk')),
+  risk_score      INTEGER NOT NULL CHECK (risk_score BETWEEN 0 AND 100),
+  findings        TEXT NOT NULL DEFAULT '',
+  recommendation  TEXT NOT NULL DEFAULT '',
+  risk_factors    TEXT NOT NULL DEFAULT '[]',
+  engine          TEXT,
+  created_at      TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_inspections_asset ON inspections(asset_id, inspection_date);
+CREATE INDEX IF NOT EXISTS idx_inspections_date ON inspections(inspection_date);
+
+CREATE TABLE IF NOT EXISTS inspection_findings (
+  id            INTEGER PRIMARY KEY AUTOINCREMENT,
+  inspection_id INTEGER NOT NULL REFERENCES inspections(id) ON DELETE CASCADE,
+  finding_type  TEXT NOT NULL,
+  label         TEXT NOT NULL,
+  detected      INTEGER NOT NULL CHECK (detected IN (0,1)),
+  confidence    REAL NOT NULL CHECK (confidence BETWEEN 0 AND 1)
+);
+CREATE INDEX IF NOT EXISTS idx_findings_inspection ON inspection_findings(inspection_id);
+
+CREATE TABLE IF NOT EXISTS maintenance_records (
+  id           INTEGER PRIMARY KEY AUTOINCREMENT,
+  asset_id     TEXT NOT NULL REFERENCES assets(asset_id) ON DELETE CASCADE,
+  issue        TEXT NOT NULL,
+  priority     TEXT NOT NULL CHECK (priority IN ('Low','Medium','High','Critical')),
+  assigned_to  TEXT NOT NULL,
+  status       TEXT NOT NULL DEFAULT 'Due' CHECK (status IN ('Due','Scheduled','In Progress','Completed')),
+  due_date     TEXT NOT NULL,
+  notes        TEXT NOT NULL DEFAULT '',
+  created_at   TEXT NOT NULL DEFAULT (datetime('now')),
+  completed_at TEXT
+);
+CREATE INDEX IF NOT EXISTS idx_maint_asset ON maintenance_records(asset_id, status);
+CREATE INDEX IF NOT EXISTS idx_maint_status ON maintenance_records(status);
+`;
+}),
+"[project]/src/database/seed/index.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "DEMO_USER",
+    ()=>DEMO_USER,
+    "seedDatabase",
+    ()=>seedDatabase
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$recommendationService$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/services/recommendationService.ts [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$server$2f$auth$2f$password$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/server/auth/password.ts [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$dates$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/utils/dates.ts [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$format$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/utils/format.ts [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$seed$2f$rng$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/database/seed/rng.ts [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$seed$2f$sections$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/database/seed/sections.ts [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$seed$2f$specs$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/src/database/seed/specs.ts [app-route] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$data$2f$engineers$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/data/engineers.ts [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$seed$2f$synth$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/database/seed/synth.ts [app-route] (ecmascript)");
+;
+;
+;
+;
+;
+;
+;
+;
+const DEMO_USER = {
+    email: "engineer@raildna.demo",
+    password: "raildna-demo",
+    name: "Demo Engineer"
+};
+const iso = (date, hour = 9)=>`${date}T${String(hour).padStart(2, "0")}:00:00.000Z`;
+function coordinates(spec, rng) {
+    const s = __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$seed$2f$sections$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["SECTIONS"][spec.section];
+    const h = s.heading * Math.PI / 180;
+    const t = rng.float(-0.45, 0.45); // along the corridor (degrees)
+    const j = rng.float(-0.02, 0.02); // across
+    return {
+        lat: Math.round((s.lat + t * Math.cos(h) - j * Math.sin(h)) * 1e5) / 1e5,
+        lng: Math.round((s.lng + t * Math.sin(h) + j * Math.cos(h)) * 1e5) / 1e5
+    };
+}
+function earlierClass(latest, rng) {
+    const r = rng.next();
+    if (latest === "good") return r < 0.85 ? "good" : "moderate";
+    if (latest === "moderate") return r < 0.5 ? "good" : "moderate";
+    return r < 0.6 ? "moderate" : r < 0.8 ? "good" : "high";
+}
+function inspectionType(rng, latestHigh) {
+    const r = rng.next();
+    if (latestHigh) return r < 0.5 ? "AI Inspection" : "Routine Inspection";
+    return r < 0.65 ? "Routine Inspection" : r < 0.8 ? "Maintenance Inspection" : "AI Inspection";
+}
+function seedDatabase(db) {
+    const today = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$dates$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["todayIso"])();
+    const rng = new __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$seed$2f$rng$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["Rng"](20260407);
+    const specs = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$seed$2f$specs$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["buildSpecs"])(rng, today, (d, n)=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$dates$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["addDays"])(d, -n));
+    const insUser = db.prepare("INSERT INTO users (email, name, role, password_hash, created_at) VALUES (?, ?, 'FIELD_ENGINEER', ?, ?)");
+    const insAsset = db.prepare(`INSERT INTO assets (asset_id, asset_type, location, latitude, longitude, installation_date, condition, risk_score, status, last_inspection, next_inspection, created_at)
+     VALUES (@asset_id, @asset_type, @location, @latitude, @longitude, @installation_date, @condition, @risk_score, @status, @last_inspection, @next_inspection, @created_at)`);
+    const insInspection = db.prepare(`INSERT INTO inspections (asset_id, inspection_date, inspection_type, inspector, image_url, condition, risk_score, findings, recommendation, risk_factors, engine, created_at)
+     VALUES (?, ?, ?, ?, NULL, ?, ?, ?, ?, ?, ?, ?)`);
+    const insFinding = db.prepare("INSERT INTO inspection_findings (inspection_id, finding_type, label, detected, confidence) VALUES (?, ?, ?, ?, ?)");
+    const insMaint = db.prepare(`INSERT INTO maintenance_records (asset_id, issue, priority, assigned_to, status, due_date, notes, created_at, completed_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+    const run = db.transaction(()=>{
+        insUser.run(DEMO_USER.email, DEMO_USER.name, (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$server$2f$auth$2f$password$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["hashPassword"])(DEMO_USER.password), iso(today));
+        for (const spec of specs){
+            const assetId = `RDNA-TRK-${spec.num}`;
+            const { lat, lng } = coordinates(spec, rng);
+            const inProgress = spec.maint.some((x)=>x.status === "In Progress");
+            let condition = null;
+            let riskScore = null;
+            let lastInspection = null;
+            const pendingInspections = [];
+            if (spec.cls !== "none") {
+                const lastAgo = spec.lastDaysAgo ?? 30;
+                lastInspection = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$dates$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["addDays"])(today, -lastAgo);
+                pendingInspections.push({
+                    date: lastInspection,
+                    type: spec.history ? "Routine Inspection" : inspectionType(rng, spec.cls === "high"),
+                    cls: spec.cls,
+                    inspector: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$data$2f$engineers$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["ENGINEERS"][0],
+                    latest: true
+                });
+                if (spec.history) {
+                    for (const h of spec.history){
+                        pendingInspections.push({
+                            date: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$dates$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["addDays"])(today, -h.daysAgo),
+                            type: h.type,
+                            cls: h.cls,
+                            inspector: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$data$2f$engineers$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["ENGINEERS"][0],
+                            latest: false
+                        });
+                    }
+                } else {
+                    let ago = lastAgo;
+                    let cls = spec.cls;
+                    const extra = rng.pick([
+                        0,
+                        1,
+                        1,
+                        2
+                    ]);
+                    for(let i = 0; i < extra; i++){
+                        ago += rng.int(70, 170);
+                        cls = earlierClass(cls, rng);
+                        pendingInspections.push({
+                            date: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$dates$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["addDays"])(today, -ago),
+                            type: inspectionType(rng, false),
+                            cls,
+                            inspector: rng.chance(0.6) ? __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$data$2f$engineers$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["ENGINEERS"][0] : rng.pick(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$data$2f$engineers$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["ENGINEERS"]),
+                            latest: false
+                        });
+                    }
+                }
+            }
+            const built = pendingInspections.map((p)=>{
+                const { assessment, findings } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$seed$2f$synth$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["synthAssessment"])(p.cls, rng);
+                const rec = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$recommendationService$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["buildRecommendation"])(assessment, findings, p.date);
+                return {
+                    date: p.date,
+                    type: p.type,
+                    inspector: p.inspector,
+                    latest: p.latest,
+                    findings,
+                    score: assessment.score,
+                    factors: JSON.stringify(assessment.factors),
+                    recText: rec.text
+                };
+            });
+            const latest = built.find((b)=>b.latest);
+            if (latest) {
+                riskScore = latest.score;
+                condition = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$format$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["conditionFromScore"])(latest.score);
+            }
+            insAsset.run({
+                asset_id: assetId,
+                asset_type: spec.type,
+                location: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$seed$2f$sections$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["SECTIONS"][spec.section].name,
+                latitude: lat,
+                longitude: lng,
+                installation_date: spec.install,
+                condition,
+                risk_score: riskScore,
+                status: inProgress ? "Under Maintenance" : "Active",
+                last_inspection: lastInspection,
+                next_inspection: spec.nextOffset !== undefined ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$dates$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["addDays"])(today, spec.nextOffset) : null,
+                created_at: iso((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$dates$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["addDays"])(today, -rng.int(200, 900)))
+            });
+            for (const b of built){
+                const summary = b.findings.filter((x)=>x.detected).map((x)=>x.label).join("; ") || "No defects detected";
+                const res = insInspection.run(assetId, b.date, b.type, b.inspector, (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$format$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["conditionFromScore"])(b.score), b.score, summary, b.recText, b.factors, b.type === "AI Inspection" ? "RailDNA Demo Inspection Engine 0.1-demo" : null, iso(b.date));
+                for (const f of b.findings)insFinding.run(res.lastInsertRowid, f.type, f.label, f.detected ? 1 : 0, f.confidence);
+            }
+            for (const mnt of spec.maint){
+                const created = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$dates$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["addDays"])(today, -mnt.daysAgo);
+                const completed = mnt.status === "Completed";
+                const dueDate = completed ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$dates$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["addDays"])(created, 14) : (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$dates$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["addDays"])(today, mnt.dueOffset);
+                insMaint.run(assetId, mnt.issue, mnt.priority, mnt.assignedTo ?? (rng.chance(0.5) ? __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$data$2f$engineers$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["ENGINEERS"][0] : rng.pick(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$data$2f$engineers$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["ENGINEERS"])), mnt.status, dueDate, completed ? "Work completed and verified on site." : "", iso(created), completed ? iso((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$dates$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["addDays"])(created, rng.int(3, 14)), 16) : null);
+            }
+        }
+    });
+    run();
+}
+}),
+"[project]/src/database/seed/rng.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+// Small deterministic PRNG (mulberry32) so demo data is identical on every machine.
+__turbopack_context__.s([
+    "Rng",
+    ()=>Rng
+]);
+class Rng {
+    s;
+    constructor(seed){
+        this.s = seed >>> 0;
+    }
+    next() {
+        this.s = this.s + 0x6d2b79f5 >>> 0;
+        let t = this.s;
+        t = Math.imul(t ^ t >>> 15, t | 1);
+        t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    }
+    int(min, max) {
+        return Math.floor(this.next() * (max - min + 1)) + min;
+    }
+    float(min, max) {
+        return this.next() * (max - min) + min;
+    }
+    pick(items) {
+        return items[Math.floor(this.next() * items.length)];
+    }
+    chance(p) {
+        return this.next() < p;
+    }
+    shuffle(items) {
+        const a = [
+            ...items
+        ];
+        for(let i = a.length - 1; i > 0; i--){
+            const j = Math.floor(this.next() * (i + 1));
+            [a[i], a[j]] = [
+                a[j],
+                a[i]
+            ];
+        }
+        return a;
+    }
+}
+}),
+"[project]/src/database/seed/sections.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+// DEMO railway sections. Names are real places used only as fictional labels; the data is synthetic.
+__turbopack_context__.s([
+    "SECTIONS",
+    ()=>SECTIONS
+]);
+const SECTIONS = [
+    {
+        name: "Pune Railway Section",
+        lat: 18.52,
+        lng: 73.86,
+        heading: 100
+    },
+    {
+        name: "Mumbai Suburban Section",
+        lat: 19.08,
+        lng: 72.88,
+        heading: 20
+    },
+    {
+        name: "Nashik Road Section",
+        lat: 19.95,
+        lng: 73.83,
+        heading: 80
+    },
+    {
+        name: "Bhusawal Section",
+        lat: 21.05,
+        lng: 75.78,
+        heading: 60
+    },
+    {
+        name: "Nagpur Section",
+        lat: 21.15,
+        lng: 79.09,
+        heading: 90
+    },
+    {
+        name: "Solapur Section",
+        lat: 17.66,
+        lng: 75.91,
+        heading: 50
+    },
+    {
+        name: "Ahmedabad Section",
+        lat: 23.02,
+        lng: 72.57,
+        heading: 15
+    },
+    {
+        name: "Vadodara Section",
+        lat: 22.31,
+        lng: 73.19,
+        heading: 170
+    },
+    {
+        name: "Ratlam Section",
+        lat: 23.33,
+        lng: 75.04,
+        heading: 120
+    },
+    {
+        name: "Bhopal Section",
+        lat: 23.26,
+        lng: 77.41,
+        heading: 70
+    },
+    {
+        name: "Itarsi Section",
+        lat: 22.61,
+        lng: 77.76,
+        heading: 150
+    },
+    {
+        name: "Jabalpur Section",
+        lat: 23.18,
+        lng: 79.95,
+        heading: 100
+    },
+    {
+        name: "Kota Section",
+        lat: 25.21,
+        lng: 75.86,
+        heading: 30
+    },
+    {
+        name: "Jaipur Section",
+        lat: 26.91,
+        lng: 75.79,
+        heading: 110
+    },
+    {
+        name: "Secunderabad Section",
+        lat: 17.44,
+        lng: 78.5,
+        heading: 40
+    },
+    {
+        name: "Kolhapur Section",
+        lat: 16.7,
+        lng: 74.24,
+        heading: 160
+    }
+];
+}),
+"[project]/src/database/seed/specs.ts [app-route] (ecmascript) <locals>", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "CURATED",
+    ()=>CURATED,
+    "TARGETS",
+    ()=>TARGETS,
+    "buildSpecs",
+    ()=>buildSpecs
+]);
+const TARGETS = {
+    total: 1248,
+    inspected: 842,
+    highRisk: 37,
+    moderate: 230,
+    maintenanceDue: 64
+};
+;
+const m = (issue, daysAgo, status, priority, dueOffset)=>({
+        issue,
+        daysAgo,
+        status,
+        priority,
+        dueOffset
+    });
+const CURATED = [
+    {
+        num: 4587,
+        type: "Fishplate",
+        section: 0,
+        install: "2020-03-12",
+        cls: "moderate",
+        lastDaysAgo: 135,
+        nextOffset: -45,
+        history: [
+            {
+                daysAgo: 315,
+                type: "Maintenance Inspection",
+                cls: "good"
+            },
+            {
+                daysAgo: 495,
+                type: "Routine Inspection",
+                cls: "good"
+            }
+        ],
+        maint: [
+            m("Corrosion detected on fishplate bolts", 300, "Completed", "Medium", 0),
+            m("Bolt re-tightening and lubrication", 540, "Completed", "Low", 0)
+        ]
+    },
+    {
+        num: 4481,
+        type: "Rail Clip",
+        section: 0,
+        install: "2019-08-20",
+        cls: "high",
+        lastDaysAgo: 20,
+        nextOffset: 10,
+        maint: [
+            m("Clip fatigue cracking", 6, "Due", "High", 8)
+        ]
+    },
+    {
+        num: 4512,
+        type: "Base Plate",
+        section: 2,
+        install: "2018-11-05",
+        cls: "high",
+        lastDaysAgo: 35,
+        nextOffset: -5,
+        maint: [
+            m("Base plate seating wear", 12, "Scheduled", "High", 9)
+        ]
+    },
+    {
+        num: 4390,
+        type: "Sleeper",
+        section: 1,
+        install: "2017-06-14",
+        cls: "moderate",
+        lastDaysAgo: 60,
+        nextOffset: 30,
+        maint: []
+    },
+    {
+        num: 4267,
+        type: "Fastener",
+        section: 3,
+        install: "2021-02-09",
+        cls: "good",
+        lastDaysAgo: 44,
+        nextOffset: 136,
+        maint: []
+    },
+    {
+        num: 4601,
+        type: "Fishplate",
+        section: 4,
+        install: "2016-09-30",
+        cls: "high",
+        lastDaysAgo: 12,
+        nextOffset: 18,
+        maint: [
+            m("Fishplate crack suspected", 3, "Due", "Critical", 4)
+        ]
+    },
+    {
+        num: 4433,
+        type: "Rail Clip",
+        section: 5,
+        install: "2022-01-17",
+        cls: "good",
+        lastDaysAgo: 70,
+        nextOffset: 110,
+        maint: []
+    },
+    {
+        num: 4350,
+        type: "Base Plate",
+        section: 6,
+        install: "2019-04-02",
+        cls: "moderate",
+        lastDaysAgo: 92,
+        nextOffset: -2,
+        maint: [
+            m("Base plate bolt replacement", 9, "In Progress", "Medium", 3)
+        ]
+    },
+    {
+        num: 4298,
+        type: "Sleeper",
+        section: 7,
+        install: "2015-12-11",
+        cls: "high",
+        lastDaysAgo: 25,
+        nextOffset: 5,
+        maint: [
+            m("Sleeper replacement", 14, "In Progress", "High", 2)
+        ]
+    },
+    {
+        num: 4655,
+        type: "Fastener",
+        section: 8,
+        install: "2023-05-21",
+        cls: "good",
+        lastDaysAgo: 30,
+        nextOffset: 150,
+        maint: []
+    },
+    {
+        num: 4702,
+        type: "Fishplate",
+        section: 9,
+        install: "2020-10-08",
+        cls: "moderate",
+        lastDaysAgo: 110,
+        nextOffset: -20,
+        maint: [
+            m("Fishplate bolt corrosion", 5, "Due", "Medium", 12)
+        ]
+    },
+    {
+        num: 4310,
+        type: "Rail Clip",
+        section: 10,
+        install: "2021-07-19",
+        cls: "good",
+        lastDaysAgo: 55,
+        nextOffset: 125,
+        maint: []
+    },
+    {
+        num: 4466,
+        type: "Sleeper",
+        section: 11,
+        install: "2018-03-03",
+        cls: "moderate",
+        lastDaysAgo: 75,
+        nextOffset: 15,
+        maint: []
+    },
+    {
+        num: 4529,
+        type: "Base Plate",
+        section: 12,
+        install: "2017-09-25",
+        cls: "high",
+        lastDaysAgo: 8,
+        nextOffset: 22,
+        maint: [
+            m("Base plate crack repair", 4, "Scheduled", "High", 10)
+        ]
+    },
+    {
+        num: 4571,
+        type: "Fastener",
+        section: 13,
+        install: "2022-11-14",
+        cls: "none",
+        maint: []
+    },
+    {
+        num: 4620,
+        type: "Fishplate",
+        section: 14,
+        install: "2019-01-29",
+        cls: "good",
+        lastDaysAgo: 90,
+        nextOffset: 90,
+        maint: []
+    },
+    {
+        num: 4288,
+        type: "Rail Clip",
+        section: 15,
+        install: "2020-06-07",
+        cls: "none",
+        maint: []
+    },
+    {
+        num: 4405,
+        type: "Sleeper",
+        section: 0,
+        install: "2016-02-16",
+        cls: "moderate",
+        lastDaysAgo: 101,
+        nextOffset: -11,
+        maint: [
+            m("Sleeper surface wear", 7, "Due", "Medium", 15)
+        ]
+    },
+    {
+        num: 4349,
+        type: "Base Plate",
+        section: 1,
+        install: "2024-01-10",
+        cls: "good",
+        lastDaysAgo: 15,
+        nextOffset: 165,
+        maint: []
+    },
+    {
+        num: 4690,
+        type: "Fastener",
+        section: 2,
+        install: "2021-09-03",
+        cls: "moderate",
+        lastDaysAgo: 66,
+        nextOffset: 24,
+        maint: []
+    }
+];
+const ISSUES = {
+    Fishplate: [
+        "Corrosion detected on fishplate",
+        "Fishplate bolt loosening",
+        "Fishplate crack suspected"
+    ],
+    "Rail Clip": [
+        "Clip fatigue cracking",
+        "Rail clip displaced",
+        "Clip corrosion"
+    ],
+    "Base Plate": [
+        "Base plate seating wear",
+        "Base plate corrosion",
+        "Base plate bolt replacement"
+    ],
+    Sleeper: [
+        "Sleeper surface wear",
+        "Sleeper cracking",
+        "Sleeper ballast loss"
+    ],
+    Fastener: [
+        "Fastener loosening",
+        "Missing fastener",
+        "Fastener corrosion"
+    ]
+};
+const TYPE_WEIGHTS = [
+    [
+        "Fishplate",
+        20
+    ],
+    [
+        "Rail Clip",
+        25
+    ],
+    [
+        "Base Plate",
+        15
+    ],
+    [
+        "Sleeper",
+        25
+    ],
+    [
+        "Fastener",
+        15
+    ]
+];
+function pickType(rng) {
+    let r = rng.int(1, 100);
+    for (const [t, w] of TYPE_WEIGHTS){
+        if ((r -= w) <= 0) return t;
+    }
+    return "Sleeper";
+}
+const INTERVAL = {
+    good: 180,
+    moderate: 90,
+    high: 30
+};
+function buildSpecs(rng, today, isoMinusDays) {
+    const count = (c)=>CURATED.filter((s)=>s.cls === c).length;
+    const curatedDue = CURATED.flatMap((s)=>s.maint).filter((x)=>x.status === "Due").length;
+    const nHigh = TARGETS.highRisk - count("high");
+    const nMod = TARGETS.moderate - count("moderate");
+    const nNone = TARGETS.total - TARGETS.inspected - count("none");
+    const nGen = TARGETS.total - CURATED.length;
+    const nGood = nGen - nHigh - nMod - nNone;
+    const classes = [
+        ...Array(nHigh).fill("high"),
+        ...Array(nMod).fill("moderate"),
+        ...Array(nNone).fill("none"),
+        ...Array(nGood).fill("good")
+    ];
+    const shuffled = rng.shuffle(classes);
+    const used = new Set(CURATED.map((s)=>s.num));
+    let next = 3000;
+    const generated = shuffled.map((cls)=>{
+        while(used.has(next))next++;
+        const num = next++;
+        const type = pickType(rng);
+        const installDaysAgo = rng.int(400, 4200);
+        const spec = {
+            num,
+            type,
+            cls,
+            section: rng.int(0, 15),
+            install: isoMinusDays(today, installDaysAgo),
+            maint: []
+        };
+        if (cls === "none") {
+            spec.nextOffset = rng.int(-20, 45);
+            return spec;
+        }
+        const overdue = rng.chance(0.08);
+        const maxAgo = cls === "high" ? 45 : cls === "moderate" ? 110 : 170;
+        spec.lastDaysAgo = overdue ? INTERVAL[cls] + rng.int(5, 90) : rng.int(2, maxAgo);
+        spec.nextOffset = INTERVAL[cls] - spec.lastDaysAgo;
+        return spec;
+    });
+    // ---- Open maintenance so the dashboard totals hit the demo targets ----
+    const issue = (s)=>rng.pick(ISSUES[s.type]);
+    const highGen = generated.filter((s)=>s.cls === "high");
+    const modGen = rng.shuffle(generated.filter((s)=>s.cls === "moderate"));
+    let due = curatedDue;
+    const addOpen = (s, status)=>{
+        const prio = s.cls === "high" ? rng.pick([
+            "High",
+            "High",
+            "Critical"
+        ]) : rng.pick([
+            "Medium",
+            "Medium",
+            "Low"
+        ]);
+        const dueOffset = status === "Due" ? rng.int(-8, 35) : status === "Scheduled" ? rng.int(5, 40) : rng.int(-3, 12);
+        s.maint.push({
+            issue: issue(s),
+            daysAgo: rng.int(2, 25),
+            status,
+            priority: prio,
+            dueOffset
+        });
+        if (status === "Due") due++;
+    };
+    highGen.forEach((s, i)=>addOpen(s, i % 6 === 5 ? "Scheduled" : i % 11 === 10 ? "In Progress" : "Due"));
+    let scheduled = 0;
+    let inProgress = 0;
+    for (const s of modGen){
+        if (due < TARGETS.maintenanceDue) addOpen(s, "Due");
+        else if (scheduled < 28) {
+            addOpen(s, "Scheduled");
+            scheduled++;
+        } else if (inProgress < 12) {
+            addOpen(s, "In Progress");
+            inProgress++;
+        }
+    }
+    // ---- Completed history (feeds the maintenance trend) ----
+    for (const s of generated){
+        if (s.cls === "none" || !rng.chance(0.3)) continue;
+        const n = rng.chance(0.25) ? 2 : 1;
+        for(let i = 0; i < n; i++){
+            s.maint.push({
+                issue: issue(s),
+                daysAgo: rng.int(25, 600),
+                status: "Completed",
+                priority: rng.pick([
+                    "Low",
+                    "Medium",
+                    "High"
+                ]),
+                dueOffset: 0
+            });
+        }
+    }
+    return [
+        ...CURATED,
+        ...generated
+    ];
+}
+}),
+"[project]/src/database/seed/synth.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "synthAssessment",
+    ()=>synthAssessment
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$riskEngine$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/services/riskEngine.ts [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$format$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/utils/format.ts [app-route] (ecmascript)");
+;
+;
+const LABELS = {
+    corrosion: [
+        "Corrosion Detected",
+        "No Significant Corrosion"
+    ],
+    surface_wear: [
+        "Surface Wear Detected",
+        "No Significant Surface Wear"
+    ],
+    crack: [
+        "Crack Detected",
+        "No Major Crack Detected"
+    ],
+    deformation: [
+        "Deformation Detected",
+        "No Deformation Detected"
+    ],
+    loose_fastener: [
+        "Loose Fastener Detected",
+        "Fastener Secure"
+    ]
+};
+function f(rng, type, detected, lo, hi) {
+    return {
+        type,
+        detected,
+        label: LABELS[type][detected ? 0 : 1],
+        confidence: Math.round(rng.float(lo, hi) * 100) / 100
+    };
+}
+function findingsFor(cls, rng) {
+    if (cls === "good") {
+        return [
+            f(rng, "corrosion", false, 0.9, 0.98),
+            f(rng, "surface_wear", false, 0.88, 0.97),
+            f(rng, "crack", false, 0.93, 0.99)
+        ];
+    }
+    if (cls === "moderate") {
+        const v = rng.int(0, 2);
+        if (v === 0) return [
+            f(rng, "surface_wear", true, 0.65, 0.92),
+            f(rng, "corrosion", false, 0.85, 0.96),
+            f(rng, "crack", false, 0.92, 0.98)
+        ];
+        if (v === 1) return [
+            f(rng, "corrosion", true, 0.5, 0.75),
+            f(rng, "surface_wear", true, 0.4, 0.7),
+            f(rng, "crack", false, 0.92, 0.98)
+        ];
+        return [
+            f(rng, "loose_fastener", true, 0.55, 0.8),
+            f(rng, "crack", false, 0.92, 0.98)
+        ];
+    }
+    const v = rng.int(0, 2);
+    if (v === 0) return [
+        f(rng, "corrosion", true, 0.82, 0.97),
+        f(rng, "surface_wear", true, 0.7, 0.94),
+        f(rng, "crack", false, 0.93, 0.98)
+    ];
+    if (v === 1) return [
+        f(rng, "crack", true, 0.85, 0.97),
+        f(rng, "surface_wear", true, 0.6, 0.85)
+    ];
+    return [
+        f(rng, "loose_fastener", true, 0.8, 0.96),
+        f(rng, "corrosion", true, 0.6, 0.9),
+        f(rng, "crack", false, 0.93, 0.98)
+    ];
+}
+function inBand(score, cls) {
+    const level = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$format$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["riskLevelFromScore"])(score);
+    return cls === "good" && level === "Low" || cls === "moderate" && level === "Moderate" || cls === "high" && level === "High";
+}
+function synthAssessment(cls, rng) {
+    for(let attempt = 0; attempt < 500; attempt++){
+        const findings = findingsFor(cls, rng);
+        const factors = [];
+        let fp = 0;
+        for (const x of findings.filter((y)=>y.detected)){
+            const pts = Math.round(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$riskEngine$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["FINDING_WEIGHTS"][x.type] * x.confidence);
+            fp += pts;
+            factors.push({
+                category: "Findings",
+                label: x.label,
+                points: pts,
+                detail: `Severity weight ${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$riskEngine$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["FINDING_WEIGHTS"][x.type]} x ${Math.round(x.confidence * 100)}% confidence`
+            });
+        }
+        if (fp > 55) {
+            factors.push({
+                category: "Findings",
+                label: "Findings cap applied",
+                points: 55 - fp,
+                detail: "Findings contribution limited to 55 points"
+            });
+            fp = 55;
+        }
+        const c = rng.int(0, cls === "good" ? 8 : 20);
+        const m = rng.pick([
+            0,
+            4,
+            8,
+            12
+        ]);
+        const s = rng.pick([
+            0,
+            0,
+            4,
+            7,
+            10
+        ]);
+        const score = fp + c + m + s;
+        if (!inBand(score, cls)) continue;
+        if (c > 0) factors.push({
+            category: "Condition & Age",
+            label: "Component age and previous condition",
+            points: c,
+            detail: "Older components and prior findings add baseline risk"
+        });
+        if (m > 0) factors.push({
+            category: "Maintenance History",
+            label: "Recurring maintenance actions",
+            points: m,
+            detail: "Frequent intervention indicates a recurring problem"
+        });
+        if (s > 0) factors.push({
+            category: "Inspection Schedule",
+            label: "Inspection overdue",
+            points: s,
+            detail: "Condition not verified within the planned interval"
+        });
+        return {
+            assessment: {
+                score,
+                level: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$format$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["riskLevelFromScore"])(score),
+                condition: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$format$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["conditionFromScore"])(score),
+                factors
+            },
+            findings
+        };
+    }
+    throw new Error(`Seed synthesis failed for class ${cls}`);
+}
+}),
+"[project]/src/server/api.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "HttpError",
+    ()=>HttpError,
+    "handler",
+    ()=>handler,
+    "readJson",
+    ()=>readJson
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/server.js [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$errors$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/zod/v4/classic/errors.js [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$server$2f$auth$2f$session$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/server/auth/session.ts [app-route] (ecmascript)");
+;
+;
+;
+;
+class HttpError extends Error {
+    status;
+    constructor(status, message){
+        super(message), this.status = status;
+    }
+}
+function handler(fn, opts = {
+    auth: true
+}) {
+    return async (req, ctx)=>{
+        try {
+            const user = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$server$2f$auth$2f$session$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["getCurrentUser"])();
+            if (opts.auth !== false && !user) throw new HttpError(401, "Please sign in to continue.");
+            return await fn(req, user, ctx);
+        } catch (err) {
+            if (err instanceof HttpError) return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                error: err.message
+            }, {
+                status: err.status
+            });
+            if (err instanceof __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$errors$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["ZodError"]) {
+                const first = err.issues[0];
+                const where = first?.path.join(".") || "input";
+                return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                    error: `Invalid ${where}: ${first?.message ?? "bad value"}`
+                }, {
+                    status: 400
+                });
+            }
+            console.error("[api] unhandled error", err);
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                error: "Something went wrong. Please try again."
+            }, {
+                status: 500
+            });
+        }
+    };
+}
+async function readJson(req) {
+    try {
+        return await req.json();
+    } catch  {
+        throw new HttpError(400, "Request body must be valid JSON.");
+    }
+}
+}),
+"[project]/src/server/auth/password.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "hashPassword",
+    ()=>hashPassword,
+    "verifyPassword",
+    ()=>verifyPassword
+]);
+var __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$crypto__$5b$external$5d$__$28$node$3a$crypto$2c$__cjs$29$__ = __turbopack_context__.i("[externals]/node:crypto [external] (node:crypto, cjs)");
+;
+const KEYLEN = 64;
+function hashPassword(password) {
+    const salt = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$crypto__$5b$external$5d$__$28$node$3a$crypto$2c$__cjs$29$__["randomBytes"])(16);
+    const hash = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$crypto__$5b$external$5d$__$28$node$3a$crypto$2c$__cjs$29$__["scryptSync"])(password, salt, KEYLEN);
+    return `scrypt$${salt.toString("hex")}$${hash.toString("hex")}`;
+}
+function verifyPassword(password, stored) {
+    const [scheme, saltHex, hashHex] = stored.split("$");
+    if (scheme !== "scrypt" || !saltHex || !hashHex) return false;
+    const expected = Buffer.from(hashHex, "hex");
+    const actual = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$crypto__$5b$external$5d$__$28$node$3a$crypto$2c$__cjs$29$__["scryptSync"])(password, Buffer.from(saltHex, "hex"), expected.length);
+    return expected.length === actual.length && (0, __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$crypto__$5b$external$5d$__$28$node$3a$crypto$2c$__cjs$29$__["timingSafeEqual"])(expected, actual);
+}
+}),
+"[project]/src/server/auth/session.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "SESSION_COOKIE",
+    ()=>SESSION_COOKIE,
+    "createSessionToken",
+    ()=>createSessionToken,
+    "getCurrentUser",
+    ()=>getCurrentUser,
+    "readSessionToken",
+    ()=>readSessionToken,
+    "sessionCookieOptions",
+    ()=>sessionCookieOptions
+]);
+var __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$crypto__$5b$external$5d$__$28$node$3a$crypto$2c$__cjs$29$__ = __turbopack_context__.i("[externals]/node:crypto [external] (node:crypto, cjs)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$headers$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/headers.js [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$repositories$2f$users$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/database/repositories/users.ts [app-route] (ecmascript)");
+;
+;
+;
+;
+const SESSION_COOKIE = "raildna_session";
+const MAX_AGE_SECONDS = 60 * 60 * 8; // 8 hours
+function secret() {
+    const s = process.env.SESSION_SECRET;
+    if (s && s.length >= 16) return s;
+    if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
+    ;
+    return "insecure-dev-only-secret-change-me";
+}
+function sign(payload) {
+    return (0, __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$crypto__$5b$external$5d$__$28$node$3a$crypto$2c$__cjs$29$__["createHmac"])("sha256", secret()).update(payload).digest("base64url");
+}
+function createSessionToken(userId) {
+    const payload = Buffer.from(JSON.stringify({
+        uid: userId,
+        exp: Date.now() + MAX_AGE_SECONDS * 1000
+    })).toString("base64url");
+    return `${payload}.${sign(payload)}`;
+}
+function readSessionToken(token) {
+    if (!token) return null;
+    const [payload, sig] = token.split(".");
+    if (!payload || !sig) return null;
+    const expected = Buffer.from(sign(payload));
+    const actual = Buffer.from(sig);
+    if (expected.length !== actual.length || !(0, __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$crypto__$5b$external$5d$__$28$node$3a$crypto$2c$__cjs$29$__["timingSafeEqual"])(expected, actual)) return null;
+    try {
+        const { uid, exp } = JSON.parse(Buffer.from(payload, "base64url").toString());
+        return typeof uid === "number" && typeof exp === "number" && exp > Date.now() ? uid : null;
+    } catch  {
+        return null;
+    }
+}
+const sessionCookieOptions = {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: ("TURBOPACK compile-time value", "development") === "production",
+    path: "/",
+    maxAge: MAX_AGE_SECONDS
+};
+async function getCurrentUser() {
+    const store = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$headers$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["cookies"])();
+    const uid = readSessionToken(store.get(SESSION_COOKIE)?.value);
+    return uid === null ? null : (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$database$2f$repositories$2f$users$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["findUserById"])(uid);
+}
+}),
+"[project]/src/services/recommendationService.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "buildRecommendation",
+    ()=>buildRecommendation
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$dates$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/utils/dates.ts [app-route] (ecmascript)");
+;
+function buildRecommendation(assessment, findings, today) {
+    const detected = findings.filter((f)=>f.detected);
+    const hasCrack = detected.some((f)=>f.type === "crack");
+    const issue = detected.length ? detected.map((f)=>f.label).join("; ") : "Routine condition follow-up";
+    let text;
+    let priority;
+    let dueInDays;
+    let nextInspectionInDays;
+    if (assessment.level === "High") {
+        priority = hasCrack ? "Critical" : "High";
+        dueInDays = hasCrack ? 3 : 14;
+        nextInspectionInDays = 30;
+        text = hasCrack ? "Crack detected. Apply speed caution and replace the component within 3 days." : "Schedule maintenance within 2 weeks.";
+    } else if (assessment.level === "Moderate") {
+        priority = "Medium";
+        dueInDays = 45;
+        nextInspectionInDays = 90;
+        text = "Monitor closely. Plan maintenance within 6 weeks and re-inspect in 90 days.";
+    } else {
+        priority = "Low";
+        dueInDays = 90;
+        nextInspectionInDays = 180;
+        text = "No action required. Continue routine inspection schedule.";
+    }
+    return {
+        text,
+        issue,
+        priority,
+        dueInDays,
+        dueDate: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$dates$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["addDays"])(today, dueInDays),
+        nextInspectionInDays
+    };
+}
+}),
+"[project]/src/services/riskEngine.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "FINDING_WEIGHTS",
+    ()=>FINDING_WEIGHTS,
+    "computeRisk",
+    ()=>computeRisk
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$format$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/utils/format.ts [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$dates$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/utils/dates.ts [app-route] (ecmascript)");
+;
+;
+const FINDING_WEIGHTS = {
+    crack: 55,
+    corrosion: 35,
+    deformation: 30,
+    loose_fastener: 30,
+    surface_wear: 15
+};
+const CAPS = {
+    findings: 55,
+    condition: 20,
+    maintenance: 15,
+    schedule: 10
+};
+const ISSUE_KEYWORDS = {
+    crack: [
+        "crack",
+        "fracture"
+    ],
+    corrosion: [
+        "corro",
+        "rust"
+    ],
+    deformation: [
+        "deform",
+        "bent",
+        "warp"
+    ],
+    loose_fastener: [
+        "loose",
+        "missing",
+        "fastener"
+    ],
+    surface_wear: [
+        "wear",
+        "abrasion"
+    ]
+};
+function computeRisk(input) {
+    const factors = [];
+    // 1. Findings ------------------------------------------------------------
+    let findingPoints = 0;
+    for (const f of input.findings.filter((x)=>x.detected)){
+        const pts = Math.round(FINDING_WEIGHTS[f.type] * f.confidence);
+        findingPoints += pts;
+        factors.push({
+            category: "Findings",
+            label: f.label,
+            points: pts,
+            detail: `Severity weight ${FINDING_WEIGHTS[f.type]} x ${Math.round(f.confidence * 100)}% confidence`
+        });
+    }
+    if (findingPoints > CAPS.findings) {
+        factors.push({
+            category: "Findings",
+            label: "Findings cap applied",
+            points: CAPS.findings - findingPoints,
+            detail: `Findings contribution limited to ${CAPS.findings} points`
+        });
+        findingPoints = CAPS.findings;
+    }
+    // 2. Condition & age -----------------------------------------------------
+    const ageYears = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$dates$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["yearsBetween"])(input.installationDate, input.today);
+    const agePts = ageYears < 2 ? 0 : ageYears < 5 ? 4 : ageYears < 8 ? 8 : 12;
+    const prevPts = input.previousCondition === "High Risk" ? 10 : input.previousCondition === "Moderate" ? 6 : 0;
+    const conditionPts = Math.min(CAPS.condition, agePts + prevPts);
+    if (agePts > 0) {
+        factors.push({
+            category: "Condition & Age",
+            label: `Component age ${ageYears.toFixed(1)} years`,
+            points: agePts,
+            detail: "Older components have accumulated more wear cycles"
+        });
+    }
+    if (prevPts > 0) {
+        factors.push({
+            category: "Condition & Age",
+            label: `Previous condition: ${input.previousCondition}`,
+            points: prevPts,
+            detail: "Last recorded condition carries forward until re-assessed"
+        });
+    }
+    // 3. Maintenance history -------------------------------------------------
+    const recent = input.maintenance.filter((m)=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$dates$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["daysBetween"])(m.createdAt.slice(0, 10), input.today) <= 730);
+    const volumePts = Math.min(12, recent.length * 4);
+    const detectedTypes = input.findings.filter((f)=>f.detected).map((f)=>f.type);
+    const repeated = recent.some((m)=>detectedTypes.some((t)=>ISSUE_KEYWORDS[t].some((k)=>m.issue.toLowerCase().includes(k))));
+    const repeatPts = repeated ? 4 : 0;
+    const maintenancePts = Math.min(CAPS.maintenance, volumePts + repeatPts);
+    if (volumePts > 0) {
+        factors.push({
+            category: "Maintenance History",
+            label: `${recent.length} maintenance action${recent.length === 1 ? "" : "s"} in last 24 months`,
+            points: volumePts,
+            detail: "Frequent intervention indicates a recurring problem"
+        });
+    }
+    if (repeatPts > 0) {
+        factors.push({
+            category: "Maintenance History",
+            label: "Repeated maintenance issue",
+            points: repeatPts,
+            detail: "A detected defect matches a previously maintained issue"
+        });
+    }
+    // 4. Inspection schedule -------------------------------------------------
+    let schedulePts = 0;
+    if (input.nextInspection) {
+        const overdue = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$dates$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["daysBetween"])(input.nextInspection, input.today);
+        schedulePts = overdue <= 0 ? 0 : overdue <= 30 ? 4 : overdue <= 90 ? 7 : CAPS.schedule;
+        if (schedulePts > 0) {
+            factors.push({
+                category: "Inspection Schedule",
+                label: `Inspection overdue by ${overdue} days`,
+                points: schedulePts,
+                detail: "Condition has not been verified within the planned interval"
+            });
+        }
+    }
+    const score = Math.max(0, Math.min(100, findingPoints + conditionPts + maintenancePts + schedulePts));
+    return {
+        score,
+        level: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$format$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["riskLevelFromScore"])(score),
+        condition: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$format$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["conditionFromScore"])(score),
+        factors
+    };
+}
+}),
+"[project]/src/utils/dates.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "addDays",
+    ()=>addDays,
+    "daysBetween",
+    ()=>daysBetween,
+    "formatDate",
+    ()=>formatDate,
+    "formatDateLong",
+    ()=>formatDateLong,
+    "lastMonthKeys",
+    ()=>lastMonthKeys,
+    "monthKey",
+    ()=>monthKey,
+    "monthLabel",
+    ()=>monthLabel,
+    "todayIso",
+    ()=>todayIso,
+    "yearsBetween",
+    ()=>yearsBetween
+]);
+// Date helpers. All dates in the DB are ISO (YYYY-MM-DD) strings computed in UTC.
+const DAY_MS = 86_400_000;
+function todayIso() {
+    return new Date().toISOString().slice(0, 10);
+}
+function addDays(iso, days) {
+    const d = new Date(`${iso}T00:00:00Z`);
+    return new Date(d.getTime() + days * DAY_MS).toISOString().slice(0, 10);
+}
+function daysBetween(fromIso, toIso) {
+    const a = new Date(`${fromIso}T00:00:00Z`).getTime();
+    const b = new Date(`${toIso}T00:00:00Z`).getTime();
+    return Math.round((b - a) / DAY_MS);
+}
+function yearsBetween(fromIso, toIso) {
+    return daysBetween(fromIso, toIso) / 365.25;
+}
+function formatDate(iso) {
+    if (!iso) return "—";
+    const d = new Date(`${iso.slice(0, 10)}T00:00:00Z`);
+    return d.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        timeZone: "UTC"
+    });
+}
+function formatDateLong(iso) {
+    if (!iso) return "—";
+    const d = new Date(`${iso.slice(0, 10)}T00:00:00Z`);
+    return d.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        timeZone: "UTC"
+    });
+}
+function monthKey(iso) {
+    return iso.slice(0, 7); // YYYY-MM
+}
+function monthLabel(key) {
+    const d = new Date(`${key}-01T00:00:00Z`);
+    return d.toLocaleDateString("en-GB", {
+        month: "short",
+        year: "2-digit",
+        timeZone: "UTC"
+    });
+}
+function lastMonthKeys(n, offsetForward = 0) {
+    const now = new Date();
+    const keys = [];
+    for(let i = n - 1; i >= -offsetForward; i--){
+        const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - i, 1));
+        keys.push(d.toISOString().slice(0, 7));
+    }
+    return keys;
+}
+}),
+"[project]/src/utils/format.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "CONDITION_TONE",
+    ()=>CONDITION_TONE,
+    "MAINT_TONE",
+    ()=>MAINT_TONE,
+    "PRIORITY_TONE",
+    ()=>PRIORITY_TONE,
+    "conditionFromScore",
+    ()=>conditionFromScore,
+    "formatNumber",
+    ()=>formatNumber,
+    "pct",
+    ()=>pct,
+    "riskLabel",
+    ()=>riskLabel,
+    "riskLevelFromScore",
+    ()=>riskLevelFromScore
+]);
+function riskLevelFromScore(score) {
+    if (score >= 61) return "High";
+    if (score >= 31) return "Moderate";
+    return "Low";
+}
+function conditionFromScore(score) {
+    const level = riskLevelFromScore(score);
+    return level === "High" ? "High Risk" : level === "Moderate" ? "Moderate" : "Good";
+}
+function riskLabel(level) {
+    return `${level.toUpperCase()} RISK`;
+}
+const CONDITION_TONE = {
+    Good: "green",
+    Moderate: "yellow",
+    "High Risk": "red"
+};
+const PRIORITY_TONE = {
+    Low: "slate",
+    Medium: "blue",
+    High: "yellow",
+    Critical: "red"
+};
+const MAINT_TONE = {
+    None: "slate",
+    Due: "red",
+    Scheduled: "blue",
+    "In Progress": "yellow",
+    Completed: "green"
+};
+function formatNumber(n) {
+    return n.toLocaleString("en-IN");
+}
+function pct(n) {
+    return `${Math.round(n * 100)}%`;
+}
+}),
+]})(),
+"[externals]/crypto [external] (crypto, cjs)", ((__turbopack_context__, module, exports) => {
+
+var mod = __turbopack_context__.x("crypto", () => require("crypto"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/compiled/@opentelemetry/api [external] (next/dist/compiled/@opentelemetry/api, cjs)", ((__turbopack_context__, module, exports) => {
+
+var mod = __turbopack_context__.x("next/dist/compiled/@opentelemetry/api", () => require("next/dist/compiled/@opentelemetry/api"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js [external] (next/dist/compiled/next-server/app-page-turbo.runtime.dev.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+var mod = __turbopack_context__.x("next/dist/compiled/next-server/app-page-turbo.runtime.dev.js", () => require("next/dist/compiled/next-server/app-page-turbo.runtime.dev.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js [external] (next/dist/compiled/next-server/app-route-turbo.runtime.dev.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+var mod = __turbopack_context__.x("next/dist/compiled/next-server/app-route-turbo.runtime.dev.js", () => require("next/dist/compiled/next-server/app-route-turbo.runtime.dev.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/server/app-render/action-async-storage.external.js [external] (next/dist/server/app-render/action-async-storage.external.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+var mod = __turbopack_context__.x("next/dist/server/app-render/action-async-storage.external.js", () => require("next/dist/server/app-render/action-async-storage.external.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/server/app-render/after-task-async-storage.external.js [external] (next/dist/server/app-render/after-task-async-storage.external.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+var mod = __turbopack_context__.x("next/dist/server/app-render/after-task-async-storage.external.js", () => require("next/dist/server/app-render/after-task-async-storage.external.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/server/app-render/work-async-storage.external.js [external] (next/dist/server/app-render/work-async-storage.external.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+var mod = __turbopack_context__.x("next/dist/server/app-render/work-async-storage.external.js", () => require("next/dist/server/app-render/work-async-storage.external.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/server/app-render/work-unit-async-storage.external.js [external] (next/dist/server/app-render/work-unit-async-storage.external.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+var mod = __turbopack_context__.x("next/dist/server/app-render/work-unit-async-storage.external.js", () => require("next/dist/server/app-render/work-unit-async-storage.external.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/server/runtime-reacts.external.js [external] (next/dist/server/runtime-reacts.external.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+var mod = __turbopack_context__.x("next/dist/server/runtime-reacts.external.js", () => require("next/dist/server/runtime-reacts.external.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/shared/lib/no-fallback-error.external.js [external] (next/dist/shared/lib/no-fallback-error.external.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+var mod = __turbopack_context__.x("next/dist/shared/lib/no-fallback-error.external.js", () => require("next/dist/shared/lib/no-fallback-error.external.js"));
+
+module.exports = mod;
+}),
+"[externals]/node:crypto [external] (node:crypto, cjs)", ((__turbopack_context__, module, exports) => {
+
+var mod = __turbopack_context__.x("node:crypto", () => require("node:crypto"));
+
+module.exports = mod;
+}),
+"[externals]/node:fs [external] (node:fs, cjs)", ((__turbopack_context__, module, exports) => {
+
+var mod = __turbopack_context__.x("node:fs", () => require("node:fs"));
+
+module.exports = mod;
+}),
+"[externals]/node:path [external] (node:path, cjs)", ((__turbopack_context__, module, exports) => {
+
+var mod = __turbopack_context__.x("node:path", () => require("node:path"));
+
+module.exports = mod;
+}),
+"[externals]/node:stream [external] (node:stream, cjs)", ((__turbopack_context__, module, exports) => {
+
+var mod = __turbopack_context__.x("node:stream", () => require("node:stream"));
+
+module.exports = mod;
+}),
+"[externals]/path [external] (path, cjs)", ((__turbopack_context__, module, exports) => {
+
+var mod = __turbopack_context__.x("path", () => require("path"));
+
+module.exports = mod;
+}),
+];
+
+//# sourceMappingURL=%5Broot-of-the-server%5D__0qwsr8oabow8u._.js.map
